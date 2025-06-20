@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ULIKE TEA - Premium Tea Blends</title>
+    
+    <!-- Only load one jQuery UI CSS -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+     
+    <!-- Theme Stylesheets -->
+    <link rel="stylesheet" href="theme-green/jquery-ui.min.css" id="theme-green">
+    <link rel="stylesheet" href="theme-red/jquery-ui.min.css" id="theme-spice" disabled>
+    <link rel="stylesheet" href="theme-sunny/jquery-ui.min.css" id="theme-sunny" disabled>
+       
+	<style>
+	
+        /* Global Styles */
+        :root {
+            --primary-color: #4a6b57;
+            --secondary-color: #5d7e6a;
+            --dark-color: #2d4536;
+            --light-color: #f9f5e9;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--light-color);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header & Logo */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 60px;
+            margin-right: 15px;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .tagline {
+            margin-left: auto;
+            font-style: italic;
+            font-size: 1.1rem;
+            text-align: right;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1.5rem;
+            background-color: var(--secondary-color);
+        }
+
+        .nav-btn {
+            padding: 0.8rem 1.8rem;
+            background-color: var(--dark-color);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background-color: #1e3528;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #666;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        /* List Page Styles */
+        .filter-container {
+            margin-bottom: 2rem;
+        }
+
+        #tea-filter {
+            padding: 0.5rem;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .tea-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tea-item {
+            
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+        }
+
+        .tea-icon {
+            margin-right: 1rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        /* Form Styles */
+        .tea-form {
+            
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 100px;
+        }
+
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .logo-container {
+                margin-bottom: 10px;
+                justify-content: center;
+            }
+            .tagline {
+                margin-left: 0;
+                text-align: center;
+            }
+        }
+	/* New Grid Layout */
+        .tea-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+        
+        .tea-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .tea-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tea-card img {
+            width: 100%;
+            border-radius: 5px;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        /* Favorites Panel */
+        .favorites-panel {
+            
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            border: 1px solid #ddd;
+        }
+        
+        .favorites-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .favorites-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .favorite-form {
+            margin-top: 20px;
+        }
+        
+        .favorite-form input {
+            padding: 8px;
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .favorite-form button {
+            padding: 8px 15px;
+            background-color: #4a6b57;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .fav-btn {
+            background: none;
+            border: none;
+            color: #4a6b57;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+
+        /* Hidden class for page navigation */
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Switcher -->
+    <div class="theme-switcher ui-widget-content">
+        <button class="theme-btn active" data-theme="green"> Earthy Green</button>
+        <button class="theme-btn" data-theme="spice"> Spice</button>
+        <button class="theme-btn" data-theme="sunny"> Sunny</button>
+    </div>
+    <!-- Header with Logo -->
+    <header>
+        <div class="ui-widget">
+            <img src="logo.jpg" alt="ULIKE TEA Logo" class="logo-img">
+            <div class="logo-text">ULIKE TEA</div>
+        </div>
+        <div class="tagline">Sip the Finest Blends from Around the World</div>
+    </header>
+
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <a href="#" class="nav-btn" data-page="home">Home</a>
+        <a href="#" class="nav-btn" data-page="products">Our Teas</a>
+        <a href="#" class="nav-btn" data-page="favorites">My Favorites</a>
+        <a href="#" class="nav-btn" data-page="contact">Contact</a>
+    </div>
+
+    <!-- Main Content - Home Page -->
+	<div id="ui-widget-content" class="ui-widget-content">
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="section">
+                <h2>Discover Our Premium Teas</h2>
+                <p>Explore our collection of handcrafted tea blends sourced from the finest gardens across Asia, Africa, and South America.</p>
+            </div>
+
+            <div class="section">
+                <h2>New Seasonal Blends</h2>
+                <p>Try our limited edition autumn collection featuring spiced chai and pumpkin-infused black tea.</p>
+            </div>
+
+            <div class="section">
+                <h2>Tea of the Month</h2>
+                <p>This month we're featuring our award-winning Jasmine Pearl Green Tea from Fujian, China.</p>
+            </div>
+        </div>
+
+        <!-- Products Page -->
+        <div id="products" class="page">
+            <a href="#" class="back-btn" data-page="home"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1>Our Tea Collection</h1>
+            
+            <div class="filter-container">
+                <label for="tea-filter">Filter Teas:</label>
+                <input type="text" id="tea-filter" placeholder="Search by tea name or type...">
+            </div>
+            
+            <ul class="tea-list" id="tea-list">
+                <li class="tea-item">
+                    <i class="fas fa-leaf tea-icon"></i>
+                    <div>
+                    <h3>Jasmine Pearl Green Tea</h3>
+                    <p>Hand-rolled green tea scented with jasmine flowers</p>
+                    <p><strong>Origin:</strong> Fujian, China</p>
+                    <button class="fav-btn" data-tea="Jasmine Pearl Green Tea">❤️ Add to Favorites</button>
+
+                    </div>
+                </li>
+                <li class="tea-item">
+                    <i class="fas fa-mug-hot tea-icon"></i>
+                    <div>
+                        <h3>Earl Grey Supreme</h3>
+                        <p>Black tea with bergamot oil and cornflower petals</p>
+                        <p><strong>Origin:</strong> Sri Lanka</p>
+			<button class="fav-btn" data-tea="Earl Grey Supreme">❤️ Add to Favorites</button>
+                    </div>
+                </li>
+                <li class="tea-item">
+                    <i class="fas fa-fire tea-icon"></i>
+                    <div>
+                        <h3>Spiced Chai</h3>
+                        <p>Black tea with cinnamon, cardamom, ginger and cloves</p>
+                        <p><strong>Origin:</strong> India</p>
+			<button class="fav-btn" data-tea="Spiced Chai">❤️ Add to Favorites</button>
+                    </div>
+                </li>
+                <li class="tea-item">
+                    <i class="fas fa-apple-alt tea-icon"></i>
+                    <div>
+                        <h3>Chamomile Citrus</h3>
+                        <p>Herbal blend with chamomile, orange peel and lemongrass</p>
+                        <p><strong>Origin:</strong> Egypt</p>
+			<button class="fav-btn" data-tea="Chamomile Citrus">❤️ Add to Favorites</button>
+                    </div>
+                </li>
+                <li class="tea-item">
+                    <i class="fas fa-mountain tea-icon"></i>
+                    <div>
+                        <h3>Darjeeling First Flush</h3>
+                        <p>Light and floral black tea from the Himalayan foothills</p>
+                        <p><strong>Origin:</strong> Darjeeling, India</p>
+			<button class="fav-btn" data-tea="Darjeeling">❤️ Add to Favorites</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Favorites Page -->
+        <div id="favorites" class="page">
+            <a href="#" class="back-btn" data-page="home"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1>My Favorite Teas</h1>
+            
+            <div class="favorites-panel">
+                <h2><i class="fas fa-heart"></i> Your Favorites</h2>
+                <ul class="favorites-list" id="favorites-list">
+                    <!-- Favorites will be displayed here by JavaScript -->
+                </ul>
+                
+                <div class="favorite-form">
+                    <h3>Add Custom Favorite</h3>
+                    <input type="text" id="custom-favorite" placeholder="Enter your favorite tea">
+                    <button id="add-favorite-btn">Add</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <a href="#" class="back-btn" data-page="home"><i class="fas fa-arrow-left"></i> Back</a>
+            <h1>Contact Us</h1>
+            <div class="section">
+                <p>Have questions about our teas? Reach out to our tea specialists!</p>
+                <p>Email: info@uliketea.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="copyright">
+            &copy; 2020 ULIKE TEA. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <script>
+
+        // Initialize on page load
+        $(function() {
+            // Initialize UI components
+            $("#tabs").tabs();
+            
+            // Load saved theme or default to green
+            const savedTheme = localStorage.getItem('ulikeTeaTheme') || 'green';
+            switchTheme(savedTheme);
+            
+            // Set up event handlers
+            setupEventHandlers();
+            
+            // Display initial favorites
+            displayFavorites();
+        });
+
+        function setupEventHandlers() {
+            // Theme button clicks
+            $(".theme-btn").click(function() {
+                const theme = $(this).data('theme');
+                switchTheme(theme);
+            });
+            
+            // Page navigation
+            $("[data-page]").click(function(e) {
+                e.preventDefault();
+                const pageId = $(this).data('page');
+                $(".page").removeClass("active");
+                $("#" + pageId).addClass("active");
+                
+                if (pageId === 'favorites') {
+                    displayFavorites();
+                }
+            });
+            
+            // Add to favorites buttons
+            $(".fav-btn").click(function() {
+                const teaName = $(this).data('tea');
+                addToFavorites(teaName);
+            });
+            
+            // Add custom favorite
+            $("#add-favorite-btn").click(function() {
+                const customTea = $("#custom-favorite").val().trim();
+                if (customTea) {
+                    addToFavorites(customTea);
+                    $("#custom-favorite").val('');
+                }
+            });
+        }
+
+        function switchTheme(themeName) {
+            // Disable all theme stylesheets
+            $("[id^='theme-']").prop('disabled', true);
+            
+            // Enable selected theme
+            $("#theme-" + themeName).prop('disabled', false);
+            
+            // Update active button
+            $(".theme-btn").removeClass("active");
+            $(`.theme-btn[data-theme="${themeName}"]`).addClass("active");
+            
+            // Save preference
+            localStorage.setItem('ulikeTeaTheme', themeName);
+        }
+
+        function addToFavorites(teaName) {
+            let favorites = JSON.parse(localStorage.getItem('teaFavorites') || '[]');
+            if (!favorites.includes(teaName)) {
+                favorites.push(teaName);
+                localStorage.setItem('teaFavorites', JSON.stringify(favorites));
+                alert(`${teaName} added to favorites!`);
+                displayFavorites();
+            } else {
+                alert(`${teaName} is already in your favorites!`);
+            }
+        }
+
+        function displayFavorites() {
+            const favorites = JSON.parse(localStorage.getItem('teaFavorites') || []);
+            const $favoritesList = $("#favorites-list");
+            
+            if (favorites.length === 0) {
+                $favoritesList.html('<li>No favorites yet. Add some teas you love!</li>');
+            } else {
+                $favoritesList.html(
+                    favorites.map(tea => 
+                        `<li>${tea} <button class="remove-btn" data-tea="${tea}">×</button></li>`
+                    ).join('')
+                );
+                
+                // Add remove handlers
+                $(".remove-btn").click(function() {
+                    const teaToRemove = $(this).data('tea');
+                    removeFromFavorites(teaToRemove);
+                });
+            }
+        }
+
+        function removeFromFavorites(teaName) {
+            let favorites = JSON.parse(localStorage.getItem('teaFavorites') || []);
+            favorites = favorites.filter(tea => tea !== teaName);
+            localStorage.setItem('teaFavorites', JSON.stringify(favorites));
+            displayFavorites();
+        }
+    </script>
+</body>
+</html>
